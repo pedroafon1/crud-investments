@@ -29,7 +29,6 @@ public class UserService {
                 Instant.now(),
                 null);
 
-        var userSaved = userRepository.save(entity);
-        return userSaved.getUserId();
+        return userRepository.save(entity);
     }
 }

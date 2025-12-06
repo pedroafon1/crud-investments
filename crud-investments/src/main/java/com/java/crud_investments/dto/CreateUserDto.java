@@ -1,6 +1,6 @@
 package com.java.crud_investments.dto;
 
-public class CreateUserDto(String username, String email, String password) {
+public record CreateUserDto(String username, String email, String password) {
 
 
 }
