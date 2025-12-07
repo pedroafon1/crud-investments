@@ -6,6 +6,8 @@ import com.java.crud_investments.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,14 +24,23 @@ public class UserService {
 
         // DTO -> Entity
         var entity = new User(
-                UUID.randomUUID(),
+                null,
                 createUserDto.username(),
                 createUserDto.email(),
                 createUserDto.password(),
-                Instant.now(),
-                null);
+                null,
+                null
+        );
 
         var userSaved = userRepository.save(entity);
         return userSaved.getUserId();
+    }
+
+    public Optional<User> getUserById(String userId) {
+        return userRepository.findById(UUID.fromString(userId));
+    }
+
+    public List<User> listUsers() {
+        return userRepository.findAll();
     }
 }

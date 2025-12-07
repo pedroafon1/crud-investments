@@ -29,6 +29,8 @@ public class User {
     @UpdateTimestamp
     private Instant updateTimestamp;
 
+    public User() {}
+
     public User(UUID userId, String username, String email, String password, Instant creationTimestamp, Instant updateTimestamp) {
         this.userId = userId;
         this.username = username;
