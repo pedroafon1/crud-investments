@@ -2,6 +2,7 @@ package com.java.crud_investments.controller;
 
 
 import com.java.crud_investments.dto.CreateUserDto;
+import com.java.crud_investments.dto.UpdateUserDto;
 import com.java.crud_investments.entity.User;
 import com.java.crud_investments.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,20 @@ public class UserController {
     public ResponseEntity<List<User>> listUsers() {
         var users = userService.listUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("userId") String userId) {
+        userService.deleteById(userId);
+        return ResponseEntity.noContent().build();
+
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateByUserId(@PathVariable("userId") String userId,
+                                               @RequestBody UpdateUserDto updateUserDto) {
+        userService.updateUserById(userId, updateUserDto);
+        return ResponseEntity.noContent().build();
+
     }
 }

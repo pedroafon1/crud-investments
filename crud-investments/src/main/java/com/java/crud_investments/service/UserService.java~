@@ -71,6 +71,7 @@ public class UserService {
             if( updateUserDto.password() != null ) {
                 user.setPassword(updateUserDto.password());
             }
+            user.setUpdateTimestamp(Instant.now());
             userRepository.save(user);
         }
 
