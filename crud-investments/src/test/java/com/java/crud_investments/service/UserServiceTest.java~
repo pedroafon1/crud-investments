@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -119,13 +120,45 @@ class UserServiceTest {
         void getUserByIdWithSuccessWhenOptionalIsNotPresent() {
 
             // Arrange
-            var user = UUID.randomUUID();
-            doReturn(Optional.empty()).when(userRepository).findById(uuidArgumentCaptor.capture());
+            var userId = UUID.randomUUID();
+            doReturn(Optional.empty())
+                    .when(userRepository)
+                    .findById(uuidArgumentCaptor.capture());
+
             // Act
-            var output = userService.getUserById(user.getUserId().toString());
+            var output = userService.getUserById(userId.toString());
+
             // Assert
-            assertTrue(output.isPresent());
-            assertEquals(user.getUserId(), uuidArgumentCaptor.getValue());
+            assertTrue(output.isEmpty());
+            assertEquals(userId, uuidArgumentCaptor.getValue());
+        }
+    }
+
+    @Nested
+    class listUsers {
+        @Test
+        @DisplayName("Should list users with success")
+        void shouldReturnAllUsersWithSuccess() {
+           // Arrange
+           var user = new User(
+                   UUID.randomUUID(),
+                   "username",
+                   "email@email.com",
+                   "password",
+                   null,
+                   null
+           );
+           var userList = List.of(user);
+           doReturn(List.of(user))
+                   .when(userRepository)
+                   .findAll();
+
+           // Act
+           var output = userService.listUsers();
+
+           // Assert
+           assertNotNull(output);
+           assertEquals(1, output.size());
         }
     }
 
