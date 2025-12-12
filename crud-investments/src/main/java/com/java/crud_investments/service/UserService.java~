@@ -28,7 +28,7 @@ public class UserService {
         var entity = new User(
                 null,
                 createUserDto.username(),
-                createUserDto.email(),
+                "",
                 createUserDto.password(),
                 null,
                 null
@@ -71,7 +71,6 @@ public class UserService {
             if( updateUserDto.password() != null ) {
                 user.setPassword(updateUserDto.password());
             }
-            user.setUpdateTimestamp(Instant.now());
             userRepository.save(user);
         }
 

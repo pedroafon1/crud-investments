@@ -121,13 +121,11 @@ class UserServiceTest {
             // Arrange
             var user = UUID.randomUUID();
             doReturn(Optional.empty()).when(userRepository).findById(uuidArgumentCaptor.capture());
-
             // Act
             var output = userService.getUserById(user.getUserId().toString());
-
             // Assert
             assertTrue(output.isPresent());
-            assertEquals(userId, uuidArgumentCaptor.getValue());
+            assertEquals(user.getUserId(), uuidArgumentCaptor.getValue());
         }
     }
 
