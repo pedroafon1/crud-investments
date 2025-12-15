@@ -32,7 +32,7 @@ public class User {
     @UpdateTimestamp
     private Instant updateTimestamp;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private List<Account> accounts;
 
 
