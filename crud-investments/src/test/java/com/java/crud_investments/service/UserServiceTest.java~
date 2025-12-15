@@ -200,23 +200,24 @@ class UserServiceTest {
         void shouldNotDeleteUserWhenUserNotExists() {
 
             // Arrange
-            var userId = UUID.randomUUID();
 
             doReturn(false)
                     .when(userRepository)
                     .existsById(any(UUID.class));
 
-            // Act + Assert
-            assertThrows(RuntimeException.class,
-                    () -> userService.deleteById(userId.toString()));
+            var userId = UUID.randomUUID();
 
-            // Verify
-            verify(userRepository, times(1))
-                    .existsById(eq(userId));
+            // Act
+            userService.deleteById(userId.toString());
 
-            verify(userRepository, never())
-                    .deleteById(any());
+            // Assert
+            var idList = uuidArgumentCaptor.getAllValues();
+            assertEquals(userId, idList.get(0));
+            assertEquals(userId, idList.get(1));
+
+            verify(userRepository, never()).deleteById(any());
         }
+
 
     }
 }
